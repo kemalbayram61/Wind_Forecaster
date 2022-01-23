@@ -78,10 +78,16 @@ class DataConverter:
         return  response
 
     #parametre olarak adığı filtreleme indexlerini kolondki verilerden çıkartmaktadır.
-    def filterData(self, dataColumn, filterIndexes):
+    def filterData(self, dataColumn, filterIndexes, dataType = None):
         response = []
         for i in range(len(dataColumn)):
             if(i not in filterIndexes):
-                response.append(dataColumn[i])
+                if(dataType == None):
+                    response.append(dataColumn[i])
+                else:
+                    if(dataColumn[i].strip()[-1].isnumeric() == False):
+                        response.append(dataType(dataColumn[i].strip()[0: len(dataColumn[i].strip()) - 1]))
+                    else:
+                        response.append(dataType(dataColumn[i].strip()))
 
         return response

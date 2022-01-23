@@ -1,7 +1,9 @@
 from data_converter import DataConverter
+from time_series    import TimeSeries
 import pandas       as pd
 
 dataConverter = DataConverter()
+timeSeries    = None
 
 if __name__ == '__main__':
     dateColumn           = dataConverter.getData("daily", "maxRuzgarYonveHiz", isDayColumn=True)
@@ -16,17 +18,20 @@ if __name__ == '__main__':
     #boyut kontrolü
     print("#### -> Filtrelemeden Önce")
     print(len(dateColumn))
-    print(len(maxWindDirection))
+    print(len(maxWindSpeed))
 
     #filtreleneck indexlerin keşfi
-    filterIndexes  = dataConverter.getFilterIndexes(maxWindDirection, None)
+    filterIndexes  = dataConverter.getFilterIndexes(maxWindSpeed, None)
 
     #verilei indexlere göre filtreleme
-    dateColumn       = dataConverter.filterData(dateColumn      , filterIndexes)
-    maxWindDirection = dataConverter.filterData(maxWindDirection, filterIndexes)
+    dateColumn   = dataConverter.filterData(dateColumn   , filterIndexes)
+    maxWindSpeed = dataConverter.filterData(maxWindSpeed , filterIndexes, dataType = float)
 
     #boyut kontrolü
     print("#### -> Filtrelemeden Sonra")
     print(len(dateColumn))
-    print(len(maxWindDirection))
+    print(len(maxWindSpeed))
+
+    #time series sınıfı
+    timeSeries = TimeSeries(maxWindSpeed, dateColumn, yLabel="En Büyük Rüzgar Hızı")
 
