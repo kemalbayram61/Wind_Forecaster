@@ -1,16 +1,32 @@
-# This is a sample Python script.
+from data_converter import DataConverter
+import pandas       as pd
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+dataConverter = DataConverter()
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    dateColumn           = dataConverter.getData("daily", "maxRuzgarYonveHiz", isDayColumn=True)
+    averageTemperature   = dataConverter.getData("daily", "ortalamaSicaklik")
+    averageHumidity      = dataConverter.getData("daily", "ortalamaNem")
+    averagePressure      = dataConverter.getData("daily", "aktuelBasinc")
+    maxWindDirection     = dataConverter.splitData(dataConverter.getData("daily", "maxRuzgarYonveHiz")      , " ", 0)
+    maxWindSpeed         = dataConverter.splitData(dataConverter.getData("daily", "maxRuzgarYonveHiz")      , " ", 1)
+    averageWindDirection = dataConverter.splitData(dataConverter.getData("daily", "ortalamaRuzgarYonveHiz") , " ", 0)
+    averageWindSpeed     = dataConverter.splitData(dataConverter.getData("daily", "ortalamaRuzgarYonveHiz") , " ", 1)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    #boyut kontrolü
+    print("#### -> Filtrelemeden Önce")
+    print(len(dateColumn))
+    print(len(maxWindDirection))
+
+    #filtreleneck indexlerin keşfi
+    filterIndexes  = dataConverter.getFilterIndexes(maxWindDirection, None)
+
+    #verilei indexlere göre filtreleme
+    dateColumn       = dataConverter.filterData(dateColumn      , filterIndexes)
+    maxWindDirection = dataConverter.filterData(maxWindDirection, filterIndexes)
+
+    #boyut kontrolü
+    print("#### -> Filtrelemeden Sonra")
+    print(len(dateColumn))
+    print(len(maxWindDirection))
+
