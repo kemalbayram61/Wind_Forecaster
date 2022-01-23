@@ -18,20 +18,21 @@ if __name__ == '__main__':
     #boyut kontrolü
     print("#### -> Filtrelemeden Önce")
     print(len(dateColumn))
-    print(len(maxWindSpeed))
+    print(len(averageWindSpeed))
 
     #filtreleneck indexlerin keşfi
-    filterIndexes  = dataConverter.getFilterIndexes(maxWindSpeed, None)
+    filterIndexes  = dataConverter.getFilterIndexes(averageWindSpeed, None)
 
     #verilei indexlere göre filtreleme
-    dateColumn   = dataConverter.filterData(dateColumn   , filterIndexes)
-    maxWindSpeed = dataConverter.filterData(maxWindSpeed , filterIndexes, dataType = float)
+    dateColumn   = dataConverter.filterData(dateColumn       , filterIndexes)
+    averageWindSpeed = dataConverter.filterData(averageWindSpeed , filterIndexes, dataType = float)
 
     #boyut kontrolü
     print("#### -> Filtrelemeden Sonra")
     print(len(dateColumn))
-    print(len(maxWindSpeed))
+    print(len(averageWindSpeed))
 
     #time series sınıfı
-    timeSeries = TimeSeries(maxWindSpeed, dateColumn, yLabel="En Büyük Rüzgar Hızı")
-
+    timeSeries = TimeSeries(averageWindSpeed, dateColumn, yLabel="Ortalama Rüzgar Hızı")
+    timeSeries.predictWithSARIMAX()
+    timeSeries.predictWithARIMA()
