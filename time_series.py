@@ -8,7 +8,6 @@ import numpy                            as np
 class TimeSeries:
     dataColumn = None
     dateColumn = None
-    dataFrame  = None
     yLabel     = None
     test       = None
     train      = None

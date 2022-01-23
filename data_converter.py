@@ -80,14 +80,20 @@ class DataConverter:
     #parametre olarak adığı filtreleme indexlerini kolondki verilerden çıkartmaktadır.
     def filterData(self, dataColumn, filterIndexes, dataType = None):
         response = []
+
         for i in range(len(dataColumn)):
             if(i not in filterIndexes):
                 if(dataType == None):
                     response.append(dataColumn[i])
                 else:
-                    if(dataColumn[i].strip()[-1].isnumeric() == False):
-                        response.append(dataType(dataColumn[i].strip()[0: len(dataColumn[i].strip()) - 1]))
+                    if(dataColumn[i] != None):
+                        if(type(dataColumn[i]) == type("k") and dataColumn[i].strip()[-1].isnumeric() == False):
+                            response.append(dataType(dataColumn[i].strip()[0: len(dataColumn[i].strip()) - 1]))
+                        elif(type(dataColumn[i]) == type("k")):
+                            response.append(dataType(dataColumn[i].strip()))
+                        else:
+                            response.append(dataColumn[i])
                     else:
-                        response.append(dataType(dataColumn[i].strip()))
+                        response.append(None)
 
         return response
