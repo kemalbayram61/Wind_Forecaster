@@ -41,6 +41,7 @@ class TimeSeries:
 
     def predictWithSARIMAX(self):
         self.prepareTestAndTrain()
+        #order = (P = otoregresif modelde kalıyor, D = fark alma / entegrasyon sırası, Q = hareketli ortalama gecikmeleri.
         model    = SARIMAX(self.train, order=(5,1,0))
         model = model.fit()
 
@@ -57,6 +58,7 @@ class TimeSeries:
 
     def predictWithARIMA(self):
         self.prepareTestAndTrain()
+        #order = (P = otoregresif modelde kalıyor, D = fark alma / entegrasyon sırası, Q = hareketli ortalama gecikmeleri.
         model    = ARIMA(self.train, order=(5,1,0))
         model = model.fit()
 
