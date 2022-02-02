@@ -41,8 +41,9 @@ class TimeSeries:
 
     def predictWithSARIMAX(self):
         self.prepareTestAndTrain()
-        #order = (P = otoregresif modelde kalıyor, D = fark alma / entegrasyon sırası, Q = hareketli ortalama gecikmeleri.
-        model    = SARIMAX(self.train, order=(5,1,0))
+        #seasonal_order = (Mevsimsel AR(Accounts Receivable) özelliği, Mevsimsel Entegrasyon sırası, Mevsimsel MA(Moving Average), Mevsimsel periyodiklik)
+        #model    = SARIMAX(self.train, order=(5,1,0), seasonal_order=(5,1,1,12))
+        model = SARIMAX(self.train, order=(5,1,0))
         model = model.fit()
 
         #modelin içeriğne ait özet bilgisi
@@ -58,7 +59,7 @@ class TimeSeries:
 
     def predictWithARIMA(self):
         self.prepareTestAndTrain()
-        #order = (P = otoregresif modelde kalıyor, D = fark alma / entegrasyon sırası, Q = hareketli ortalama gecikmeleri.
+        #order = (P = otoregresif model parametresi, D = fark alma , Q = hareketli ortalama gecikmeleri)
         model    = ARIMA(self.train, order=(5,1,0))
         model = model.fit()
 
