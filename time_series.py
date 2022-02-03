@@ -26,7 +26,7 @@ class TimeSeries:
         plt.show()
 
     def prepareTestAndTrain(self):
-        splitCount       = int(len(self.dataColumn)*0.7)
+        splitCount       = int(len(self.dataColumn)*0.98)
         self.train       = pd.DataFrame(np.reshape(self.dataColumn[0:splitCount], (splitCount, 1)), columns=[self.yLabel])
         self.train.index = self.dateColumn[0:splitCount]
         self.test        = pd.DataFrame(np.reshape(self.dataColumn[splitCount:], (len(self.dateColumn) - splitCount, 1)), columns=[self.yLabel])
@@ -43,7 +43,7 @@ class TimeSeries:
         self.prepareTestAndTrain()
         #seasonal_order = (Mevsimsel AR(Accounts Receivable) özelliği, Mevsimsel Entegrasyon sırası, Mevsimsel MA(Moving Average), Mevsimsel periyodiklik)
         #model    = SARIMAX(self.train, order=(5,1,0), seasonal_order=(5,1,1,12))
-        model = SARIMAX(self.train, order=(5,1,0))
+        model = SARIMAX(self.train, order=(1,1,1), sesional_order=(1,1,1,1))
         model = model.fit()
 
         #modelin içeriğne ait özet bilgisi
@@ -60,7 +60,7 @@ class TimeSeries:
     def predictWithARIMA(self):
         self.prepareTestAndTrain()
         #order = (P = otoregresif model parametresi, D = fark alma , Q = hareketli ortalama gecikmeleri)
-        model    = ARIMA(self.train, order=(5,1,0))
+        model    = ARIMA(self.train, order=(1,1,1))
         model = model.fit()
 
         #modelin içeriğne ait özet bilgisi
